@@ -28,7 +28,7 @@ use App\Http\Controllers\Employe\EmpTaskController;
 */
 
 
-// Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+Route::get('/dashboard1', [HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/form', [HomeController::class, 'form'])->name('form');
 Route::get('/bootstrap_table', [HomeController::class, 'bootstrap_table'])->name('bootstrap_table');
 Route::get('/sign_up', [HomeController::class, 'sign_up'])->name('sign_up');

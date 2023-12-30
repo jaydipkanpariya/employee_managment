@@ -46,6 +46,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Mobile No</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,6 +74,10 @@
                 <form id="AddEmployee" action="{{route('employee.add')}}" method="POST">
                 {{ csrf_field() }}
                     <div class="modal-body">
+                    <div class="form-group">
+                            <label class="floating-label" for="Email">Emp Code</label>
+                            <input type="text" name="emp_code" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Emp Code">
+                        </div>
                         <div class="form-group">
                             <label class="floating-label" for="Email">Name</label>
                             <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Your Name">
@@ -106,6 +111,9 @@
                 name: {
                     required: true,
                 },
+                emp_code: {
+                    required: true,
+                },
                 emp_email: {
                     required: true,
                 },
@@ -114,6 +122,9 @@
                 },
             },
             messages: {
+                emp_code: {
+                    required: "Please enter Emp Code",
+                },
                 name: {
                     required: "Please enter Name",
                 },
@@ -179,6 +190,10 @@
                 {
                     data: 'emp_mobile',
                     name: 'emp_mobile'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
                 },
                 
             ]
