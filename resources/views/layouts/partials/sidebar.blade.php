@@ -6,13 +6,18 @@
 
         $dashboard = route('admin.dashboard');
         $task = route('employe.task.list');
-    }else{
+    }else if(Auth::guard('employe')->user()){
         $name = Auth::guard('employe')->user()->name;
         $email = Auth::guard('employe')->user()->emp_email;
 
         $dashboard = route('employe.dashboard');
         $task = route('employe.task.list');
 
+    }else{
+        $name = '';
+        $email = '';
+        $dashboard = '';
+        $task = '';
     }
     ?>
 	<nav class="pcoded-navbar  ">

@@ -16,74 +16,80 @@ class EmpTaskController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $total_tasks = Task::query();
-            if(Auth::guard('employe')->user()){
-                $total_tasks->where('user_id',Auth::guard('employe')->user()->id);
-            }
-            if (isset($request['from']) && $request['from'] != "" && !empty($request['from'])) {
-                $total_tasks->whereDate('date', ' >= ', date("Y-m-d", strtotime($request['from'])));
-            }
-            if (isset($request['to']) && $request['to'] != "" && !empty($request['to'])) {
-                $total_tasks->whereDate('date', ' <= ', date("Y-m-d", strtotime($request['to'])));
-            }
-            if (isset($request['project']) && $request['project'] != "" && !empty($request['project'])) {
-                $total_tasks->where('project', $request['project']);
-            }
-            if (isset($request['employee']) && $request['employee'] != "" && !empty($request['employee'])) {
-                $total_tasks->where('user_id', $request['employee']);
-            }
-            $total_hours = $total_tasks->sum('hours');
+        if (Auth::guard('admin')->user() || Auth::guard('employe')->user()) {
 
-            //  datatable
-            $query = Task::with('projects', 'employee');
-            if(Auth::guard('employe')->user()){
-                $query->where('user_id',Auth::guard('employe')->user()->id);
-            }
-            $data = $query->orderBy('id', 'DESC')
-            ->select('*');
+            if ($request->ajax()) {
+                $total_tasks = Task::query();
+                if (Auth::guard('employe')->user()) {
+                    $total_tasks->where('user_id', Auth::guard('employe')->user()->id);
+                }
+                if (isset($request['from']) && $request['from'] != "" && !empty($request['from'])) {
+                    $total_tasks->whereDate('date', ' >= ', date("Y-m-d", strtotime($request['from'])));
+                }
+                if (isset($request['to']) && $request['to'] != "" && !empty($request['to'])) {
+                    $total_tasks->whereDate('date', ' <= ', date("Y-m-d", strtotime($request['to'])));
+                }
+                if (isset($request['project']) && $request['project'] != "" && !empty($request['project'])) {
+                    $total_tasks->where('project', $request['project']);
+                }
+                if (isset($request['employee']) && $request['employee'] != "" && !empty($request['employee'])) {
+                    $total_tasks->where('user_id', $request['employee']);
+                }
+                $total_hours = $total_tasks->sum('hours');
 
-            $table =  Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('project_name', function ($row) {
-                    return @$row->projects->name;
-                })
-                ->addColumn('user_name', function ($row) {
-                    return @$row->employee->name;
-                })
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewemployestask(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
+                //  datatable
+                $query = Task::with('projects', 'employee');
+                if (Auth::guard('employe')->user()) {
+                    $query->where('user_id', Auth::guard('employe')->user()->id);
+                }
+                $data = $query->orderBy('id', 'DESC')
+                    ->select('*');
+
+                $table = Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('project_name', function ($row) {
+                        return @$row->projects->name;
+                    })
+                    ->addColumn('user_name', function ($row) {
+                        return @$row->employee->name;
+                    })
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewemployestask(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
                                     <i class="far fa-edit"></i>
                                 </a>';
 
-                    return $btn;
-                })
-                ->filter(function ($query) use ($request) {
-                    if (isset($request['from']) && $request['from'] != "" && !empty($request['from'])) {
-                        $query->whereDate('date', ' >= ', date("Y-m-d", strtotime($request['from'])));
-                    }
-                    if (isset($request['to']) && $request['to'] != "" && !empty($request['to'])) {
-                        $query->whereDate('date', ' <= ', date("Y-m-d", strtotime($request['to'])));
-                    }
-                    if (isset($request['project']) && $request['project'] != "" && !empty($request['project'])) {
-                        $query->where('project', $request['project']);
-                    }
-                    if (isset($request['employee']) && $request['employee'] != "" && !empty($request['employee'])) {
-                        $query->where('user_id', $request['employee']);
-                    }
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+                        return $btn;
+                    })
+                    ->filter(function ($query) use ($request) {
+                        if (isset($request['from']) && $request['from'] != "" && !empty($request['from'])) {
+                            $query->whereDate('date', ' >= ', date("Y-m-d", strtotime($request['from'])));
+                        }
+                        if (isset($request['to']) && $request['to'] != "" && !empty($request['to'])) {
+                            $query->whereDate('date', ' <= ', date("Y-m-d", strtotime($request['to'])));
+                        }
+                        if (isset($request['project']) && $request['project'] != "" && !empty($request['project'])) {
+                            $query->where('project', $request['project']);
+                        }
+                        if (isset($request['employee']) && $request['employee'] != "" && !empty($request['employee'])) {
+                            $query->where('user_id', $request['employee']);
+                        }
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
 
                 return response()->json([
                     'data' => $table,
                     'total_hours' => $total_hours,
                 ]);
-        }
-        $projects = Project::orderBy('id', 'DESC')->select('*')->get();
-        $employees = Employes::all();
+            }
+            $projects = Project::orderBy('id', 'DESC')->select('*')->get();
+            $employees = Employes::all();
 
-        return view('employe.task.list', compact('projects','employees'));
+            return view('employe.task.list', compact('projects', 'employees'));
+        } else {
+            return view('admin.login');
+
+        }
     }
 
     public function add(Request $request)
@@ -124,7 +130,7 @@ class EmpTaskController extends Controller
             $employee->hours = $request->hours;
             $employee->date = $request->date;
             $employee->remarks = $request->remarks;
-            if(Auth::guard('admin')->user()){
+            if (Auth::guard('admin')->user()) {
                 $employee->updated_by = Auth::guard('admin')->user()->id;
             }
             $employee->save();
