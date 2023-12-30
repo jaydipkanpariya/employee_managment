@@ -72,6 +72,8 @@ Route::middleware('employe')->group(function () {
     // task
     Route::get('/task', [EmpTaskController::class, 'index'])->name('employe.task.list');
     Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
+    Route::get('/task/edit/{id}', [EmpTaskController::class, 'edit'])->name('employe.task.edit');
+    Route::post('/task/update', [EmpTaskController::class, 'update'])->name('employee.task.update');
 
     // Logout Routes
     Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');

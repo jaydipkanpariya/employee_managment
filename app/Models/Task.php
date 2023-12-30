@@ -19,4 +19,12 @@ class Task extends Model
         'user_id',
         'updated_by',
     ];
+    public function projects()
+    {
+        return $this->belongsTo(Project::class, 'project', 'id');
+    }
+    public function employee()
+    {
+        return $this->belongsTo(Employes::class, 'user_id', 'id');
+    }
 }
