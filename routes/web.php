@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\EmployeeController;
+
+
+use App\Http\Controllers\Employe\EmployeeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +22,11 @@ use App\Http\Controllers\Admin\EmployeeController;
 */
 
 
-Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+// Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/form', [HomeController::class, 'form'])->name('form');
 Route::get('/bootstrap_table', [HomeController::class, 'bootstrap_table'])->name('bootstrap_table');
 Route::get('/sign_up', [HomeController::class, 'sign_up'])->name('sign_up');
 Route::get('/sample_page', [HomeController::class, 'sample_page'])->name('sample_page');
-Route::get('/employee', [HomeController::class, 'employee'])->name('employee');
 
 // employes
 Route::get('/sign_in', [HomeController::class, 'sign_in'])->name('sign_in');
@@ -38,11 +40,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::middleware('admin')->group(function () {
         // dashboard
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-
-        //Employee
-        Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
-
         // Logout Routes
         Route::get('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
     });
 });
+
+Route::get('/', [EmployeeController::class, 'showLoginForm'])->name('employe.login');

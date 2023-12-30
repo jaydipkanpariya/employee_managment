@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\frontend;
+namespace App\Http\Controllers\Employe;
 
 use App\Http\Controllers\Controller;
 use App\Providers\EmployesServiceProvider;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Employes;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-class LoginController extends Controller
+class EmpLoginController extends Controller
 {
     use AuthenticatesUsers;
 
