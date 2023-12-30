@@ -23,5 +23,4 @@ Route::get('/sign_in', [HomeController::class, 'sign_in'])->name('sign_in');
 Route::get('/sign_up', [HomeController::class, 'sign_up'])->name('sign_up');
 Route::get('/sample_page', [HomeController::class, 'sample_page'])->name('sample_page');
 
-
-// Auth::routes();
+Auth::routes();
