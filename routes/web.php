@@ -3,11 +3,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+// admin
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 
 
-use App\Http\Controllers\Employe\EmployeeController;
+//  employe
+use App\Http\Controllers\Employe\EmpLoginController;
+use App\Http\Controllers\Employe\EmpDashboardController;
 
 
 /*
@@ -45,4 +48,11 @@ Route::group(['prefix' => 'admin'], function () {
     });
 });
 
-Route::get('/', [EmployeeController::class, 'showLoginForm'])->name('employe.login');
+Route::get('/', [EmpLoginController::class, 'showLoginForm'])->name('employe.login');
+Route::post('/login/submit', [EmpLoginController::class, 'login'])->name('employe.login.submit');
+Route::middleware('employe')->group(function () {
+    // dashboard
+    Route::get('/dashboard', [EmpDashboardController::class, 'dashboard'])->name('employe.dashboard');
+    // Logout Routes
+    Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
+});

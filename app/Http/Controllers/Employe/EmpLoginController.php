@@ -41,11 +41,12 @@ class EmpLoginController extends Controller
     //     $user->save();
     //     return redirect()->route('frontend')->with('success', 'Sign Up was successful!');
     // }
-
+    public function showLoginForm()
+    {
+        return view('admin.login');
+    }
     public function login(Request $request)
     {
-        // return $request;
-        // Validate Login Data
         $request->validate([
             'email' => 'required|max:50',
             'password' => 'required',
