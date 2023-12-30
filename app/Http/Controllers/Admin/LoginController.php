@@ -58,7 +58,6 @@ class LoginController extends Controller
             'email' => 'required|max:50',
             'password' => 'required',
         ]);
-        return Admin::all();
         // Attempt to login
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             // Redirect to dashboard

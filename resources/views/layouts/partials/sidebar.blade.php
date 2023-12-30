@@ -24,6 +24,9 @@
 						<label>Forms &amp; table</label>
 					</li>
 					<li class="nav-item">
+						<a href="{{route('employee')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Employee</span></a>
+					</li>
+					<li class="nav-item">
 						<a href="{{route('form')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Forms</span></a>
 					</li>
 					<li class="nav-item">

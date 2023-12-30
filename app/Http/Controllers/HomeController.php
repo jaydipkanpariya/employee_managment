@@ -16,6 +16,11 @@ class HomeController extends Controller
     {
         return view('form');
     }
+    public function employee()
+    {
+        
+        return view('employee');
+    }
 
     public function bootstrap_table()
     {
