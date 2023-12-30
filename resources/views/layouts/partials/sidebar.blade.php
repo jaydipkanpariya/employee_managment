@@ -5,7 +5,7 @@
         $email = Auth::guard('admin')->user()->email;
 
         $dashboard = route('admin.dashboard');
-        $task_report_route = route('task_report');
+        $task_report_route = route('admin.task_report');
     }else{
         $name = Auth::guard('employe')->user()->name;
         $email = Auth::guard('employe')->user()->emp_email;

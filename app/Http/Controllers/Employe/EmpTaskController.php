@@ -91,4 +91,30 @@ class EmpTaskController extends Controller
             return response()->json($response_array, 500);
         }
     }
+
+    public function task_report(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Task::with('projects', 'employee')->orderBy('id', 'DESC')->select('*');
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('project_name', function ($row) {
+                    return @$row->projects->name;
+                })
+                ->addColumn('user_name', function ($row) {
+                    return @$row->employee->name;
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewemployestask(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
+                                    <i class="far fa-edit"></i>
+                                </a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        $projects = Project::orderBy('id', 'DESC')->select('*')->get();
+        return view('employe.report.task_report', compact('projects'));
+    }
 }

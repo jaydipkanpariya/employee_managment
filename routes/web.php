@@ -84,3 +84,8 @@ Route::middleware('employe')->group(function () {
     // Logout Routes
     Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
 });
+
+Route::middleware(['middleware1', 'middleware2'])->group(function () {
+    
+});
+
