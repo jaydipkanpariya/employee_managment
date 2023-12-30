@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
 
          //Employee
          Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
+         Route::post('/employee/add', [EmployeeController::class, 'add'])->name('employee.add');
         // Logout Routes
         Route::get('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
     });

@@ -21,13 +21,20 @@
         </div>
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
-        <div class="row">            
+        <div class="row">
             <!-- [ stiped-table ] start -->
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">
+                    <!-- <div>
                         <h5>Striped Table</h5>
                         <span class="d-block m-t-5">use class <code>table-striped</code> inside table element</span>
+                    </div> -->
+
+
+                    <div class="justify-content-end d-flex">
+                        <button type="button" class="btn btn-primary m-t-5 mr-4 mt-2" data-toggle="modal" data-target="#form">
+                            Add
+                        </button>
                     </div>
                     <div class="card-body table-border-style">
                         <div class="table-responsive">
@@ -69,5 +76,101 @@
         </div>
         <!-- [ Main Content ] end -->
     </div>
+
+    <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="AddEmployee" action="{{route('employee.add')}}" method="POST">
+                {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="floating-label" for="Email">Name</label>
+                            <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="floating-label" for="Email">Email address</label>
+                            <input type="email" name="emp_email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter Your Email">
+                        </div>
+                        <div class="form-group">
+                            <label class="floating-label" for="Text">Mobile No</label>
+                            <input type="text" name="emp_mobile" class="form-control" id="Text" placeholder="Enter Your Mobile No">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </section>
+
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function() {
+
+        
+        $("#AddEmployee").validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                emp_email: {
+                    required: true,
+                },
+                emp_mobile: {
+                    required: true,
+                },
+            },
+            messages: {
+                name: {
+                    required: "Please enter Name",
+                },
+                emp_email: {
+                    required: "Please enter Email",
+                },
+                emp_mobile: {
+                    required: "Please enter Mobile",
+                },
+            },
+            errorElement: "p",
+            errorPlacement: function(error, element) {
+                if (element.prop("tagName").toLowerCase() === "select") {
+                    error.insertAfter(element.closest(".form-group").find(".select2"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function() {
+                var form = $('#AddEmployee');
+                $(form).ajaxSubmit({
+                    dataType: 'json',
+                   
+                    success: function(data) {
+                        if (data.status == "success") {
+                            form.closest('.modal').modal('hide');
+                            notify("Task Successfully Completed", 'success');
+                            // $('#datatable').dataTable().api().ajax.reload();
+                        } else {
+                            notify(data.status, 'warning');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    console.error(status);
+                    console.error(error);
+                }
+                });
+                return false;
+            }
+        });
+    });
+</script>
 @endsection
