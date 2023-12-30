@@ -1,0 +1,7 @@
+ALTER TABLE `purchases` ADD `payment_type` TINYINT NOT NULL AFTER `date`;
+
+ALTER TABLE `purchases` ADD `bank_id` INT NULL DEFAULT NULL AFTER `payment_type`, ADD `cheque_no` VARCHAR(100) NOT NULL AFTER `bank_id`, ADD `remark` TEXT NULL DEFAULT NULL AFTER `cheque_no`;
+
+ALTER TABLE `purchases` ADD `amount` FLOAT(10,2) NOT NULL AFTER `date`;
+
+ALTER TABLE `purchases` CHANGE `payment_type` `payment_type` TINYINT(4) NOT NULL COMMENT '1 cash 2 Cheque 3 online';
