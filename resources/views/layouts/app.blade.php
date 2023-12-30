@@ -49,19 +49,15 @@
     <script src="{{ asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{ asset('assets/js/plugins/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/js/pcoded.min.js')}}"></script>
-
-    <!-- Apex Chart -->
-    <!-- <script src="{{ asset('assets/js/plugins/apexcharts.min.js')}}"></script> -->
-
-
-    <!-- custom-chart js -->
-    <!-- <script src="{{ asset('assets/js/pages/dashboard-main.js')}}"></script> -->
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>   
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     <!-- Include SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+   
     <!-- Your custom script -->
     <script>
         function notify(msg, type = "success") {
@@ -70,16 +66,6 @@
                 title: msg,
                 timer: (type == "success") ? 1000 : 2000
             });
-        }
-    </script>
-
-    <script>
-        function notify(msg, type = "success") {
-            Swal.fire({
-                icon: type,
-                title: msg,
-                timer: (type == "success") ? 1000 : 2000
-            })
         }
     </script>
     @yield('scripts')

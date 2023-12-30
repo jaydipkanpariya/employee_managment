@@ -38,34 +38,18 @@
                     </div>
                     <div class="card-body table-border-style">
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped" id="employeetable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Username</th>
+                                        <th>Emp Code</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile No</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -157,7 +141,7 @@
                         if (data.status == "success") {
                             form.closest('.modal').modal('hide');
                             notify("Employee Successfully Completed", 'success');
-                            // $('#datatable').dataTable().api().ajax.reload();
+                            $('#employeetable').dataTable().api().ajax.reload();
                         } else {
                             notify(data.status, 'warning');
                         }
@@ -171,6 +155,36 @@
                 return false;
             }
         });
+        var table = $('#employeetable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('employee.list') }}",
+            columns: [{
+                    "data": "DT_RowIndex",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'emp_code',
+                    name: 'emp_code'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'emp_email',
+                    name: 'emp_email'
+                },
+                {
+                    data: 'emp_mobile',
+                    name: 'emp_mobile'
+                },
+                
+            ]
+        });
+
+
     });
 </script>
 @endsection

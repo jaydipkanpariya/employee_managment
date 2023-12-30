@@ -10,7 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        if ($request->ajax()) {
+            $data = Employes::orderBy('id','DESC')->select('*');
+            return Datatables::of($data)
+                ->addIndexColumn()
+               
+                ->rawColumns(['action','name'])
+                ->make(true);
+        }
         return view('admin.employee.list');
     }
 
