@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Project;
+use App\Models\Employes;
 use Illuminate\Http\Request;
 use DataTables;
 use Exception;
@@ -19,11 +20,12 @@ class DashboardController extends Controller
             return view('admin.login');
         }
         $total_project = Project::count();
-
+        $employees = Employes::all();
+        $projects = Project::all();
 
 
         $tasks = Task::query();
-        
+
         $last_seven_day_start = now()->subDays(7)->startOfDay();
         $last_seven_day_end = now()->endOfDay();
         $last_seven_day_sum = $tasks->whereBetween('date', [$last_seven_day_start->format('Y-m-d'), $last_seven_day_end->format('Y-m-d')])->sum('hours');
@@ -35,6 +37,6 @@ class DashboardController extends Controller
         $total_hours = $tasks->sum('hours');
 
 
-        return view('admin.dashboard', compact('last_seven_day_sum','current_month_sum','total_hours','total_project'));
+        return view('admin.dashboard', compact('employees','projects','last_seven_day_sum','current_month_sum','total_hours','total_project'));
     }
 }

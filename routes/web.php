@@ -59,8 +59,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/project/add', [ProjectController::class, 'add'])->name('project.add');
         Route::post('/project/update', [ProjectController::class, 'update'])->name('project.update');
 
-        // report
-        Route::get('/task-report', [ReportController::class, 'task_report'])->name('task_report');
+    //         // task
+    // Route::get('/task', [EmpTaskController::class, 'index'])->name('employe.task.list');
+    // Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
+    // Route::get('/task/edit/{id}', [EmpTaskController::class, 'edit'])->name('employe.task.edit');
+    // Route::post('/task/update', [EmpTaskController::class, 'update'])->name('employee.task.update');
 
         // Logout Routes
         Route::get('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
@@ -74,18 +77,20 @@ Route::post('/login/submit', [EmpLoginController::class, 'login'])->name('employ
 // after employe login routes
 Route::middleware('employe')->group(function () {
     // task
+    // Route::get('/task', [EmpTaskController::class, 'index'])->name('employe.task.list');
+    // Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
+    // Route::get('/task/edit/{id}', [EmpTaskController::class, 'edit'])->name('employe.task.edit');
+    // Route::post('/task/update', [EmpTaskController::class, 'update'])->name('employee.task.update');
+
+    // Logout Routes
+    Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
+});
+
+// Route::middleware(['admin', 'employe'])->group(function () {
     Route::get('/task', [EmpTaskController::class, 'index'])->name('employe.task.list');
     Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
     Route::get('/task/edit/{id}', [EmpTaskController::class, 'edit'])->name('employe.task.edit');
     Route::post('/task/update', [EmpTaskController::class, 'update'])->name('employee.task.update');
 
-    //  report
-    Route::get('/task-report', [EmpTaskController::class, 'task_report'])->name('employe.task_report');
-    // Logout Routes
-    Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
-});
-
-Route::middleware(['middleware1', 'middleware2'])->group(function () {
-    
-});
+// });
 

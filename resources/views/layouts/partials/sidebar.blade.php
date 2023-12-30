@@ -5,13 +5,13 @@
         $email = Auth::guard('admin')->user()->email;
 
         $dashboard = route('admin.dashboard');
-        $task_report_route = route('admin.task_report');
+        $task = route('employe.task.list');
     }else{
         $name = Auth::guard('employe')->user()->name;
         $email = Auth::guard('employe')->user()->emp_email;
 
         $dashboard = route('employe.dashboard');
-        $task_report_route = route('employe.task_report');
+        $task = route('employe.task.list');
 
     }
     ?>
@@ -39,14 +39,10 @@
 						<a href="{{route('project.list')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Projects</span></a>
 					</li>
 
-                    @if(Auth::guard('employe')->user())
                     <li class="nav-item">
-						<a href="{{route('employe.task.list')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Task</span></a>
+						<a href="{{ $task }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Task</span></a>
 					</li>
-                    @endif
-                    <li class="nav-item">
-						<a href="{{$task_report_route}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Task Report</span></a>
-					</li>
+
 				</ul>
 			</div>
 		</div>

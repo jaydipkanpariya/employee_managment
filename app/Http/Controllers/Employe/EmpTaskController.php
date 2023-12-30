@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employe;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Project;
+use App\Models\Employes;
 use Illuminate\Http\Request;
 use DataTables;
 use Exception;
@@ -16,8 +17,33 @@ class EmpTaskController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Task::with('projects', 'employee')->orderBy('id', 'DESC')->select('*');
-            return Datatables::of($data)
+            $total_tasks = Task::query();
+            if(Auth::guard('employe')->user()){
+                $total_tasks->where('user_id',Auth::guard('employe')->user()->id);
+            }
+            if (isset($request['from']) && $request['from'] != "" && !empty($request['from'])) {
+                $total_tasks->whereDate('date', ' >= ', date("Y-m-d", strtotime($request['from'])));
+            }
+            if (isset($request['to']) && $request['to'] != "" && !empty($request['to'])) {
+                $total_tasks->whereDate('date', ' <= ', date("Y-m-d", strtotime($request['to'])));
+            }
+            if (isset($request['project']) && $request['project'] != "" && !empty($request['project'])) {
+                $total_tasks->where('project', $request['project']);
+            }
+            if (isset($request['employee']) && $request['employee'] != "" && !empty($request['employee'])) {
+                $total_tasks->where('user_id', $request['employee']);
+            }
+            $total_hours = $total_tasks->sum('hours');
+
+            //  datatable
+            $query = Task::with('projects', 'employee');
+            if(Auth::guard('employe')->user()){
+                $query->where('user_id',Auth::guard('employe')->user()->id);
+            }
+            $data = $query->orderBy('id', 'DESC')
+            ->select('*');
+
+            $table =  Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('project_name', function ($row) {
                     return @$row->projects->name;
@@ -32,12 +58,32 @@ class EmpTaskController extends Controller
 
                     return $btn;
                 })
+                ->filter(function ($query) use ($request) {
+                    if (isset($request['from']) && $request['from'] != "" && !empty($request['from'])) {
+                        $query->whereDate('date', ' >= ', date("Y-m-d", strtotime($request['from'])));
+                    }
+                    if (isset($request['to']) && $request['to'] != "" && !empty($request['to'])) {
+                        $query->whereDate('date', ' <= ', date("Y-m-d", strtotime($request['to'])));
+                    }
+                    if (isset($request['project']) && $request['project'] != "" && !empty($request['project'])) {
+                        $query->where('project', $request['project']);
+                    }
+                    if (isset($request['employee']) && $request['employee'] != "" && !empty($request['employee'])) {
+                        $query->where('user_id', $request['employee']);
+                    }
+                })
                 ->rawColumns(['action'])
                 ->make(true);
+
+                return response()->json([
+                    'data' => $table,
+                    'total_hours' => $total_hours,
+                ]);
         }
         $projects = Project::orderBy('id', 'DESC')->select('*')->get();
+        $employees = Employes::all();
 
-        return view('employe.task.list', compact('projects'));
+        return view('employe.task.list', compact('projects','employees'));
     }
 
     public function add(Request $request)
@@ -78,7 +124,9 @@ class EmpTaskController extends Controller
             $employee->hours = $request->hours;
             $employee->date = $request->date;
             $employee->remarks = $request->remarks;
-            $employee->user_id = Auth::guard('employe')->user()->id;
+            if(Auth::guard('admin')->user()){
+                $employee->updated_by = Auth::guard('admin')->user()->id;
+            }
             $employee->save();
 
             DB::commit();
