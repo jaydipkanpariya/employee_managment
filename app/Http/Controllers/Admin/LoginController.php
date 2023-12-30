@@ -82,7 +82,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::guard('admin')->logout();
-        session()->flash('success', 'Successully Logout in !');
+        session()->flash('success', 'Successully Logout !');
         return redirect()->route('admin.dashboard');
     }
 

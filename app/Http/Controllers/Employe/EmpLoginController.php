@@ -64,7 +64,7 @@ class EmpLoginController extends Controller
     public function logout()
     {
         Auth::guard('employe')->logout();
-        session()->flash('success', 'Successully Logout in !');
+        session()->flash('success', 'Successully Logout !');
         return redirect()->back();
     }
 }

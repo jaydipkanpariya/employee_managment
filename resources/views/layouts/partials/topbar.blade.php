@@ -1,4 +1,14 @@
 <!-- [ Header ] start -->
+<?php
+    if(Auth::guard('admin')->user()){
+        
+        $routes = route('admin.logout.submit');
+    }else{
+        
+        $routes = route('employe.logout.submit');
+
+    }
+    ?>
 <header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark">
 
 
@@ -104,7 +114,7 @@
                             </a>
                         </div>
                         <ul class="pro-body">
-                            <li><a href="{{route('sign_in')}}" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
+                            <li><a href="{{$routes}}" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
                         </ul>
                     </div>
                 </div>
