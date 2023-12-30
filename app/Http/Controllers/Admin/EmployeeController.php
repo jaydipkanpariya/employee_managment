@@ -25,7 +25,7 @@ class EmployeeController extends Controller
                                     <i class="far fa-edit"></i>
                                 </a>';
 
-                    $btn .= '<a href="javascript:void(0)" class="btn btn-outline-danger mx-1 delete" data-bs-id="' . $row->id . '" data-bs-toggle="modal" data-bs-target="#Delete">
+                    $btn .= '<a href="javascript:void(0)" class="btn btn-outline-danger mx-1 delete mytest"  href="javascript:void(0);"  data-url="' . route('employee.delete', $row->id) . '" data-bs-toggle="modal" data-bs-target="#Delete">
                                     <i class="far fa-trash-alt"></i>
                                 </a>';
 
@@ -83,5 +83,17 @@ class EmployeeController extends Controller
     {
         $emp = Employes::find($id);
         return view('admin.employee.edit', compact('emp'));
+    }
+    public function delete($id)
+    {
+        try {
+            DB::transaction(function () use ($id) {
+                $Payment = Employes::find($id);
+                $Payment->delete();
+            }, 5);
+            return response()->json(['status' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'msg' => $e->getMessage()]);
+        }
     }
 }

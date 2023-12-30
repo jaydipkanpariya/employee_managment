@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
         //Employee
         Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
         Route::get('/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
+        Route::delete('/employee/delete/{id}', [EmployeeController::class, 'delete'])->name('employee.delete');
         Route::post('/employee/add', [EmployeeController::class, 'add'])->name('employee.add');
         //Employee
         Route::get('/project', [ProjectController::class, 'index'])->name('project.list');

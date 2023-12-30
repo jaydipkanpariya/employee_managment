@@ -50,14 +50,14 @@
     <script src="{{ asset('assets/js/plugins/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/js/pcoded.min.js')}}"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>   
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     <!-- Include SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-   
+
     <!-- Your custom script -->
     <script>
         function notify(msg, type = "success") {
@@ -67,6 +67,40 @@
                 timer: (type == "success") ? 1000 : 2000
             });
         }
+
+        $('.dataTable').on('click', '.mytest', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = $(this).data('url');
+                    $.ajax({
+                        url: url,
+                        type: "DELETE",
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            if (data.status == "success") {
+                                Swal.fire(
+                                    'Deleted!', 'Your data has been deleted.', 'success'
+                                )
+                                $('.dataTable').dataTable().api().ajax.reload();
+                            } else {
+                                notify(data.msg, 'error');
+                            }
+                        }
+                    });
+                }
+            });
+        });
     </script>
     @yield('scripts')
 </body>

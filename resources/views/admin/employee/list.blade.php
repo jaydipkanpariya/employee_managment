@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-body table-border-style">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="employeetable">
+                            <table class="table table-striped dataTable" id="employeetable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
