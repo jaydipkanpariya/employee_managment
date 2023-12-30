@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row">
-            
+
             <div class="col-md-12 col-xl-3">
                 <div class="card flat-card widget-primary-card">
                     <div class="row-table">
@@ -72,7 +72,19 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-12 col-xl-3">
+                <div class="card flat-card widget-purple-card">
+                    <div class="row-table">
+                        <div class="col-sm-3 card-body">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="col-sm-9">
+                            <h4>{{ $emp_name }} - {{ $maxTotalHours }} </h4>
+                            <h6>Highest Hours of the Month</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <!-- [ Main Content ] end -->
