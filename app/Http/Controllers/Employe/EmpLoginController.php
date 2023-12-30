@@ -43,7 +43,7 @@ class EmpLoginController extends Controller
     // }
     public function showLoginForm()
     {
-        return view('admin.login');
+        return view('employe.login');
     }
     public function login(Request $request)
     {
@@ -53,15 +53,18 @@ class EmpLoginController extends Controller
         ]);
 
         // Attempt to login
-        if (Auth::guard('employe')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            return redirect()->route('frontend')->with('success', 'Successully Logged in');
+        if (Auth::guard('employe')->attempt(['emp_email' => $request->email, 'password' => $request->password], $request->remember)) {
+            session()->flash('success', 'Successully Logged in !');
+            return redirect()->route('employe.dashboard');
         } else {
-            return redirect()->route('frontend')->with('error', 'Invalid email and password');
+            session()->flash('error', 'Invalid email and password');
+            return redirect()->back();
         }
     }
     public function logout()
     {
         Auth::guard('employe')->logout();
-        return redirect()->route('frontend')->with('success', 'Logout Successully !');
+        session()->flash('success', 'Successully Logout in !');
+        return redirect()->back();
     }
 }

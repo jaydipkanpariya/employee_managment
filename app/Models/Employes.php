@@ -11,5 +11,9 @@ class Employes extends Authenticatable
 {
 
     use Notifiable;
+    protected $table = 'employees';
+
     protected $guard_name = 'employes';
+
+
 }
