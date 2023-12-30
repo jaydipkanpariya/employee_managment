@@ -11,7 +11,27 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+
+        if ($request->ajax()) {
+            $data = Project::orderBy('id', 'DESC')->select('*');
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewproject(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
+                                    <i class="far fa-edit"></i>
+                                </a>';
+
+                    $btn .= '<a href="javascript:void(0)" class="btn btn-outline-danger mx-1 delete mytest"  href="javascript:void(0);"  data-url="' . route('project.delete', $row->id) . '" data-bs-toggle="modal" data-bs-target="#Delete">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
         return view('admin.project.list');
     }
 
@@ -32,6 +52,23 @@ class ProjectController extends Controller
             $error_code = $e->getcode();
             $response_array = ['error_code' => 500, 'success' => false, 'error_messages' => $error_messages];
             return response()->json($response_array, 500);
+        }
+    }
+    public function edit($id)
+    {
+        $pro = Project::find($id);
+        return view('admin.project.edit', compact('pro'));
+    }
+    public function delete($id)
+    {
+        try {
+            DB::transaction(function () use ($id) {
+                $Payment = Project::find($id);
+                $Payment->delete();
+            }, 5);
+            return response()->json(['status' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'msg' => $e->getMessage()]);
         }
     }
 }

@@ -38,34 +38,18 @@
                     </div>
                     <div class="card-body table-border-style">
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped dataTable" id="projecttable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Username</th>
+                                        <th>Project Name</th>
+                                        <th>Client Name</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -106,6 +90,14 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editprojects" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" id="projectdetails">
+
             </div>
         </div>
     </div>
@@ -171,6 +163,46 @@
                 return false;
             }
         });
+        var table = $('#projecttable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('project.list') }}",
+            columns: [{
+                    "data": "DT_RowIndex",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'client_name',
+                    name: 'client_name'
+                },
+                {
+                    data: 'date',
+                    name: 'date'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
+                },
+
+            ]
+        });
     });
+    function viewproject(id) {
+            $.ajax({
+                url: "{{ url('admin/project/edit') }}/" + id,
+                type: "GET"
+
+                    ,
+                success: function(data) {
+                    $('#editprojects').modal('show');
+                    $("#projectdetails").html(data);
+                }
+            });
+        }
 </script>
 @endsection

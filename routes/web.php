@@ -50,10 +50,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/employee/delete/{id}', [EmployeeController::class, 'delete'])->name('employee.delete');
         Route::post('/employee/add', [EmployeeController::class, 'add'])->name('employee.add');
         Route::post('/employee/update', [EmployeeController::class, 'update'])->name('employee.update');
-        
+
         //Employee
         Route::get('/project', [ProjectController::class, 'index'])->name('project.list');
+        Route::get('/project/edit/{id}', [ProjectController::class, 'edit'])->name('project.edit');
+        Route::delete('/project/delete/{id}', [ProjectController::class, 'delete'])->name('project.delete');
         Route::post('/project/add', [ProjectController::class, 'add'])->name('project.add');
+        Route::post('/project/update', [ProjectController::class, 'update'])->name('project.update');
+
         // Logout Routes
         Route::get('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
     });
