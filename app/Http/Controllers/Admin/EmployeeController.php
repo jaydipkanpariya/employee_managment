@@ -21,7 +21,7 @@ class EmployeeController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" data-bs-id="' . $row->id . '" data-bs-name="' . $row->name . '" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
+                    $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewemployes(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
                                     <i class="far fa-edit"></i>
                                 </a>';
 
@@ -78,5 +78,10 @@ class EmployeeController extends Controller
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
         return Str::random($length, $characters);
+    }
+    public function edit($id)
+    {
+        $emp = Employes::find($id);
+        return view('admin.employee.edit', compact('emp'));
     }
 }

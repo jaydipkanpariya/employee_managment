@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::middleware('admin')->group(function () {
         //Employee
         Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
+        Route::get('/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
         Route::post('/employee/add', [EmployeeController::class, 'add'])->name('employee.add');
         //Employee
         Route::get('/project', [ProjectController::class, 'index'])->name('project.list');

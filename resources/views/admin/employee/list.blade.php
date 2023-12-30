@@ -50,7 +50,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -95,6 +95,16 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="employedit12" tabindex="-1" role="dialog" aria-labelledby="exampleeditModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" id="employedit">
+
+
+
             </div>
         </div>
     </div>
@@ -195,11 +205,23 @@
                     data: 'action',
                     name: 'action'
                 },
-                
+
             ]
         });
 
 
     });
+    function viewemployes(id) {
+            $.ajax({
+                url: "{{ url('admin/employee/edit') }}/" + id,
+                type: "GET"
+
+                    ,
+                success: function(data) {
+                    $('#employedit12').modal('show');
+                    $("#employedit").html(data);
+                }
+            });
+        }
 </script>
 @endsection
