@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 // admin
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EmployeeController;
 
 
 //  employe
@@ -43,6 +44,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::middleware('admin')->group(function () {
         // dashboard
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+
+         //Employee
+         Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
         // Logout Routes
         Route::get('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
     });

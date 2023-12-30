@@ -7,6 +7,6 @@ use DataTables;
 class EmployeeController extends Controller
 {
     public function index(){
-        return view('employee.list');
+        return view('admin.employee.list');
     }
 }

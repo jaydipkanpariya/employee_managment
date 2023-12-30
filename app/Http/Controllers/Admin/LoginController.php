@@ -62,6 +62,7 @@ class LoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             // Redirect to dashboard
             session()->flash('success', 'Successully Logged in !');
+
             return redirect()->route('admin.dashboard');
         } else {
             // Search using username
@@ -69,7 +70,7 @@ class LoginController extends Controller
                 session()->flash('success', 'Successully Logged in !');
                 return redirect()->route('admin.dashboard');
             }
-
+            // toastr()->error('Invalid email and password');
             session()->flash('error', 'Invalid email and password');
             return redirect()->back();
         }
