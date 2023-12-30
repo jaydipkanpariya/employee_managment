@@ -46,6 +46,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Mobile No</th>
+                                        <th>Password</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -200,6 +201,10 @@
                 {
                     data: 'emp_mobile',
                     name: 'emp_mobile'
+                },
+                {
+                    data: 'raw_password',
+                    name: 'raw_password'
                 },
                 {
                     data: 'action',

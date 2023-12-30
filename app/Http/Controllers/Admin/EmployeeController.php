@@ -84,6 +84,40 @@ class EmployeeController extends Controller
         $emp = Employes::find($id);
         return view('admin.employee.edit', compact('emp'));
     }
+    public function update(Request $request){
+        try {
+            DB::beginTransaction();
+            $password = $this->generateRandomPassword();
+            $employee = Employes::find($request->id);
+            $employee->emp_code = $request->emp_code;
+            $employee->name = $request->name;
+            $employee->emp_email = $request->emp_email;
+            $employee->emp_mobile = $request->emp_mobile;
+            $employee->password = Hash::make($password);
+            $employee->raw_password = $password;
+            $employee->save();
+
+            $toemail = $request->emp_email;
+
+
+
+            // Mail::send([], [], function ($message) use ($toemail) {
+            //     $message->from('from@gmail.com', 'Highsense')
+            //         ->to($toemail)
+            //         ->subject('Reset Password')
+            //         ->setBody('Your email content goes here'); // Replace this line with your actual email content
+            // });
+
+            DB::commit();
+            $response_array = ['status_code' => 200, 'status' => "success", 'message' => 'Inserted Successfully'];
+            return response()->json($response_array, 200);
+        } catch (Exception $e) {
+            $error_messages = $e->getmessage();
+            $error_code = $e->getcode();
+            $response_array = ['error_code' => 500, 'success' => false, 'error_messages' => $error_messages];
+            return response()->json($response_array, 500);
+        }
+    }
     public function delete($id)
     {
         try {
