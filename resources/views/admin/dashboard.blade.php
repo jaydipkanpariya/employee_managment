@@ -26,7 +26,7 @@
                             <i class="feather icon-star-on"></i>
                         </div>
                         <div class="col-sm-9">
-                            <h4>4000 </h4>
+                            <h4>{{ $last_seven_day_sum }} </h4>
                             <h6>Total Weekly Hours</h6>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             <i class="fas fa-trophy"></i>
                         </div>
                         <div class="col-sm-9">
-                            <h4>17 </h4>
+                            <h4>{{ $current_month_sum }} </h4>
                             <h6>Total Monthly Hours</h6>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             <i class="feather icon-star-on"></i>
                         </div>
                         <div class="col-sm-9">
-                            <h4>4000 </h4>
+                            <h4>{{ $total_hours }} </h4>
                             <h6>Total Hours</h6>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                             <i class="fas fa-trophy"></i>
                         </div>
                         <div class="col-sm-9">
-                            <h4>17</h4>
+                            <h4>{{ $total_project }}</h4>
                             <h6>Total Projects</h6>
                         </div>
                     </div>

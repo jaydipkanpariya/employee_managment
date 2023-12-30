@@ -149,7 +149,7 @@
                         if (data.status == "success") {
                             form.closest('.modal').modal('hide');
                             notify("Project Successfully Completed", 'success');
-                            // $('#datatable').dataTable().api().ajax.reload();
+                            $('#projecttable').dataTable().api().ajax.reload();
                         } else {
                             notify(data.status, 'warning');
                         }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ReportController;
 
 
 //  employe
@@ -58,6 +59,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/project/add', [ProjectController::class, 'add'])->name('project.add');
         Route::post('/project/update', [ProjectController::class, 'update'])->name('project.update');
 
+        // report
+        Route::get('/task-report', [ReportController::class, 'task_report'])->name('task_report');
+
         // Logout Routes
         Route::get('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
     });
@@ -75,6 +79,8 @@ Route::middleware('employe')->group(function () {
     Route::get('/task/edit/{id}', [EmpTaskController::class, 'edit'])->name('employe.task.edit');
     Route::post('/task/update', [EmpTaskController::class, 'update'])->name('employee.task.update');
 
+    //  report
+    Route::get('/task-report', [EmpTaskController::class, 'task_report'])->name('employe.task_report');
     // Logout Routes
     Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
 });

@@ -5,11 +5,14 @@
         $email = Auth::guard('admin')->user()->email;
 
         $dashboard = route('admin.dashboard');
+        $task_report_route = route('task_report');
     }else{
         $name = Auth::guard('employe')->user()->name;
         $email = Auth::guard('employe')->user()->emp_email;
 
         $dashboard = route('employe.dashboard');
+        $task_report_route = route('employe.task_report');
+
     }
     ?>
 	<nav class="pcoded-navbar  ">
@@ -25,25 +28,25 @@
 						</div>
 					</div>
 				</div>
-
 				<ul class="nav pcoded-inner-navbar ">
-					
 					<li class="nav-item">
 						<a href="{{ $dashboard }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
 					</li>
-					
 					<li class="nav-item">
 						<a href="{{route('employee.list')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Employee</span></a>
 					</li>
                     <li class="nav-item">
 						<a href="{{route('project.list')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Projects</span></a>
-					</li>	
-					
+					</li>
+
                     @if(Auth::guard('employe')->user())
                     <li class="nav-item">
 						<a href="{{route('employe.task.list')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Task</span></a>
 					</li>
                     @endif
+                    <li class="nav-item">
+						<a href="{{$task_report_route}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Task Report</span></a>
+					</li>
 				</ul>
 			</div>
 		</div>
