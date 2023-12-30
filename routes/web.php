@@ -37,14 +37,11 @@ Route::get('/sign_in', [HomeController::class, 'sign_in'])->name('sign_in');
 
 // admin panel
 Route::group(['prefix' => 'admin'], function () {
-    // Login Routes
-    Route::get('/', [LoginController::class, 'showLoginForm'])->name('admin.login');
+    // Login and dashboard
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::post('/login/submit', [LoginController::class, 'login'])->name('admin.login.submit');
-    // after login routes
+    // after admin login routes
     Route::middleware('admin')->group(function () {
-        // dashboard
-        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-
          //Employee
          Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
          Route::post('/employee/add', [EmployeeController::class, 'add'])->name('employee.add');
@@ -53,11 +50,12 @@ Route::group(['prefix' => 'admin'], function () {
     });
 });
 
-Route::get('/', [EmpLoginController::class, 'showLoginForm'])->name('employe.login');
+
+// login and dashboard
+Route::get('/', [EmpDashboardController::class, 'dashboard'])->name('employe.dashboard');
 Route::post('/login/submit', [EmpLoginController::class, 'login'])->name('employe.login.submit');
+// after employe login routes
 Route::middleware('employe')->group(function () {
-    // dashboard
-    Route::get('/dashboard', [EmpDashboardController::class, 'dashboard'])->name('employe.dashboard');
     // Logout Routes
     Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
 });
