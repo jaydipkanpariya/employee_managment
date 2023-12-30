@@ -8,12 +8,12 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Employee List</h5>
+                            <h5 class="m-b-10">Project List</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#!">Employee</a></li>
-                            <li class="breadcrumb-item"><a href="#!">Employee List</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Project</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Project List</a></li>
                         </ul>
                     </div>
                 </div>
@@ -81,25 +81,25 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Project</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="AddEmployee" action="{{route('employee.add')}}" method="POST">
+                <form id="AddProject" action="{{route('project.add')}}" method="POST">
                 {{ csrf_field() }}
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="floating-label" for="Email">Name</label>
-                            <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Your Name">
+                            <label class="floating-label" for="name">Name</label>
+                            <input type="text" name="name" class="form-control" id="name"  placeholder="Enter Your Name">
                         </div>
                         <div class="form-group">
-                            <label class="floating-label" for="Email">Email address</label>
-                            <input type="email" name="emp_email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter Your Email">
+                            <label class="floating-label" for="client_name">Client Name</label>
+                            <input type="text" name="client_name" class="form-control" id="client_name"  placeholder="Enter Your Email">
                         </div>
                         <div class="form-group">
-                            <label class="floating-label" for="Text">Mobile No</label>
-                            <input type="text" name="emp_mobile" class="form-control" id="Text" placeholder="Enter Your Mobile No">
+                            <label class="floating-label" for="date">Start Date</label>
+                            <input type="date" name="date" class="form-control" id="date" >
                         </div>
                     </div>
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -117,15 +117,15 @@
     $(document).ready(function() {
 
 
-        $("#AddEmployee").validate({
+        $("#AddProject").validate({
             rules: {
                 name: {
                     required: true,
                 },
-                emp_email: {
+                client_name: {
                     required: true,
                 },
-                emp_mobile: {
+                date: {
                     required: true,
                 },
             },
@@ -133,11 +133,11 @@
                 name: {
                     required: "Please enter Name",
                 },
-                emp_email: {
-                    required: "Please enter Email",
+                client_name: {
+                    required: "Please enter Client Name",
                 },
-                emp_mobile: {
-                    required: "Please enter Mobile",
+                date: {
+                    required: "Please enter Start Date",
                 },
             },
             errorElement: "p",
@@ -149,14 +149,14 @@
                 }
             },
             submitHandler: function() {
-                var form = $('#AddEmployee');
+                var form = $('#AddProject');
                 $(form).ajaxSubmit({
                     dataType: 'json',
 
                     success: function(data) {
                         if (data.status == "success") {
                             form.closest('.modal').modal('hide');
-                            notify("Employee Successfully Completed", 'success');
+                            notify("Project Successfully Completed", 'success');
                             // $('#datatable').dataTable().api().ajax.reload();
                         } else {
                             notify(data.status, 'warning');

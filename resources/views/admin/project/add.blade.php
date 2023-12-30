@@ -8,12 +8,12 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Add Employee</h5>
+                            <h5 class="m-b-10">Add Project</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="#!">Form Components</a></li>
-                            <li class="breadcrumb-item"><a href="#!">Add Employee</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Add Project</a></li>
                         </ul>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add Employee</h5>
+                        <h5>Add Project</h5>
                     </div>
                     <div class="card-body">
                         <form>
@@ -38,14 +38,14 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label class="floating-label" for="Email">Email address</label>
-                                        <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter Your Email">
+                                        <label class="floating-label" for="Email">Client Name</label>
+                                        <input type="text" class="form-control" id="client_name" aria-describedby="emailHelp" placeholder="Enter Your Email">
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label class="floating-label" for="Text">Mobile No</label>
-                                        <input type="text" class="form-control" id="Text" placeholder="Enter Your Mobile No">
+                                        <label class="floating-label" for="Text">Start Date</label>
+                                        <input type="date" class="form-control" id="date" >
                                     </div>
                                 </div>
                             </div>

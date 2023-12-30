@@ -21,7 +21,7 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
-
+            @yield('style')
     <style>
         .error {
             color: red;
@@ -60,6 +60,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     <!-- Include SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Your custom script -->
     <script>
@@ -74,7 +75,6 @@
 
     <script>
         function notify(msg, type = "success") {
-            alert(1);
             Swal.fire({
                 icon: type,
                 title: msg,

@@ -7,11 +7,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\ProjectController;
 
 
 //  employe
 use App\Http\Controllers\Employe\EmpLoginController;
 use App\Http\Controllers\Employe\EmpDashboardController;
+use App\Http\Controllers\Employe\EmpTaskController;
 
 
 /*
@@ -42,9 +44,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/login/submit', [LoginController::class, 'login'])->name('admin.login.submit');
     // after admin login routes
     Route::middleware('admin')->group(function () {
-         //Employee
-         Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
-         Route::post('/employee/add', [EmployeeController::class, 'add'])->name('employee.add');
+        //Employee
+        Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.list');
+        Route::post('/employee/add', [EmployeeController::class, 'add'])->name('employee.add');
+        //Employee
+        Route::get('/project', [ProjectController::class, 'index'])->name('project.list');
+        Route::post('/project/add', [ProjectController::class, 'add'])->name('project.add');
         // Logout Routes
         Route::get('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
     });
@@ -56,6 +61,10 @@ Route::get('/', [EmpDashboardController::class, 'dashboard'])->name('employe.das
 Route::post('/login/submit', [EmpLoginController::class, 'login'])->name('employe.login.submit');
 // after employe login routes
 Route::middleware('employe')->group(function () {
+    // task
+    Route::get('/task', [EmpTaskController::class, 'index'])->name('employe.task.list');
+    Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
+
     // Logout Routes
     Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
 });
