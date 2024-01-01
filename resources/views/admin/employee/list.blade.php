@@ -161,6 +161,7 @@
 
                     success: function(data) {
                         if (data.status == "success") {
+                            form[0].reset();
                             form.closest('.modal').modal('hide');
                             notify("Employee Successfully Completed", 'success');
                             $('#employeetable').dataTable().api().ajax.reload();

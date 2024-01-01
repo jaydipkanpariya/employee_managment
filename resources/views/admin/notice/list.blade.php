@@ -153,6 +153,7 @@
 
                         success: function(data) {
                             if (data.status == "success") {
+                                form[0].reset();
                                 form.closest('.modal').modal('hide');
                                 notify("Notice Successfully Completed", 'success');
                                 $('#noticetable').dataTable().api().ajax.reload();

@@ -147,6 +147,7 @@
 
                     success: function(data) {
                         if (data.status == "success") {
+                            form[0].reset();
                             form.closest('.modal').modal('hide');
                             notify("Project Successfully Completed", 'success');
                             $('#projecttable').dataTable().api().ajax.reload();
