@@ -37,12 +37,14 @@
 					<li class="nav-item">
 						<a href="{{ $dashboard }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
 					</li>
+                    @if(Auth::guard('admin')->user())
 					<li class="nav-item">
 						<a href="{{route('employee.list')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Employee</span></a>
 					</li>
                     <li class="nav-item">
 						<a href="{{route('project.list')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Projects</span></a>
 					</li>
+                    @endif
                     <li class="nav-item">
 						<a href="{{ $task }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Task</span></a>
 					</li>

@@ -1,11 +1,15 @@
 <!-- [ Header ] start -->
 <?php
     if(Auth::guard('admin')->user()){
-        
+
         $routes = route('admin.logout.submit');
+        $name = Auth::guard('admin')->user()->name;
+        $email = Auth::guard('admin')->user()->email;
     }else{
-        
+
         $routes = route('employe.logout.submit');
+        $name = Auth::guard('employe')->user()->name;
+        $email = Auth::guard('employe')->user()->emp_email;
 
     }
     ?>
@@ -37,7 +41,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li>
-                <div class="dropdown">
+                {{-- <div class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                         <i class="icon feather icon-bell"></i>
                         <span class="badge badge-pill badge-danger">5</span>
@@ -58,7 +62,7 @@
                                 <div class="media">
                                     <img class="img-radius" src="{{ asset('assets/images/user/avatar-1.jpg')}}" alt="Generic placeholder image">
                                     <div class="media-body">
-                                        <p><strong>John Doe</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>5 min</span></p>
+                                        <p><strong>{{ $name }}</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>5 min</span></p>
                                         <p>New ticket Added</p>
                                     </div>
                                 </div>
@@ -98,7 +102,7 @@
                             <a href="#!">show all</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </li>
             <li>
                 <div class="dropdown drp-user">
@@ -108,13 +112,13 @@
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
                             <img src="{{ asset('assets/images/user/avatar-1.jpg')}}" class="img-radius" alt="User-Profile-Image">
-                            <span>John Doe</span>
+                            <span>{{ $name }}</span>
                             <a href="auth-signin.html" class="dud-logout" title="Logout">
                                 <i class="feather icon-log-out"></i>
                             </a>
                         </div>
                         <ul class="pro-body">
-                            <li><a href="{{$routes}}" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
+                            <li><a href="{{$routes}}" class="dropdown-item"><i class="feather icon-lock"></i> Logout</a></li>
                         </ul>
                     </div>
                 </div>
