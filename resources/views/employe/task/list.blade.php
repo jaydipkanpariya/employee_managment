@@ -177,7 +177,7 @@
                                 <label class="floating-label" for="date">Start Date</label>
 
                                 <input type="date" name="date" class="form-control" id="datepicker"
-                                    value="{{ date('Y/m/d') }}">
+                                    value="{{ date('Y-m-d')  }}">
                                 {{-- <input type="text" id="startDate" name="startDate"> --}}
 
                             </div>

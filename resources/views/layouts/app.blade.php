@@ -64,8 +64,8 @@
             $(document).ready(function() {
                 if ({{ Auth::guard('employe')->user()->note }} == 1) {
                     Swal.fire({
-                        title: 'Here New Notice',
-                        text: "You won be able to Read this!",
+                        title: 'New Notice',
+                        text: "Check This Notice In Dashboard",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
