@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ProjectController;
-use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\NoticeController;
 
 
 //  employe
@@ -59,6 +59,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/project/add', [ProjectController::class, 'add'])->name('project.add');
         Route::post('/project/update', [ProjectController::class, 'update'])->name('project.update');
 
+        //Notice
+        Route::get('/notice', [ProjectController::class, 'index'])->name('admin.notice');
+
+        
     //         // task
     // Route::get('/task', [EmpTaskController::class, 'index'])->name('employe.task.list');
     // Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
