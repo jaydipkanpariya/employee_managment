@@ -1,60 +1,57 @@
 <div class="modal-header border-bottom-0">
-    <h5 class="modal-title" id="exampleModalLabel">Edit Project</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Edit Notice</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form id="EditProject" action="{{ route('project.update') }}" method="POST">
+<form id="EditNotice" action="{{ route('notice.update') }}" method="POST">
     {{ csrf_field() }}
     <input type="hidden" name="id" value="{{ $pro->id }}">
     <div class="modal-body">
         <div class="form-group">
-            <label class="floating-label" for="name">Name</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Name"
-                value="{{ $pro->name }}">
+            <label class="floating-label" for="date">Date</label>
+            <input type="date" name="date" class="form-control" id="date"
+                value="{{ $pro->date }}">
         </div>
         <div class="form-group">
-            <label class="floating-label" for="client_name">Client Name</label>
-            <input type="text" name="client_name" class="form-control" id="client_name"
-                placeholder="Enter Your Email" value="{{ $pro->client_name }}">
+            <label class="floating-label" for="title">Title</label>
+            <input type="text" name="title" class="form-control" id="title" value="{{ $pro->title }}"
+                placeholder="Enter Your Title">
         </div>
         <div class="form-group">
-            <label class="floating-label" for="date">Start Date</label>
-            <input type="date" name="date" class="form-control" id="date" value="{{ $pro->date }}">
+            <label class="floating-label" for="description">Description</label>
+            <textarea name="description" rows="6" class="form-control" id="description" placeholder="Enter Your Description">{{ $pro->description }}</textarea>
         </div>
+
     </div>
     <div class="modal-footer border-top-0 d-flex justify-content-center">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
 <script>
-    $("#EditProject").validate({
+    $("#EditNotice").validate({
         rules: {
-            name: {
+
+            description: {
                 required: true,
             },
-            emp_code: {
+            title: {
                 required: true,
             },
-            emp_email: {
-                required: true,
-            },
-            emp_mobile: {
+            date: {
                 required: true,
             },
         },
         messages: {
-            emp_code: {
-                required: "Please enter Emp Code",
+
+            description: {
+                required: "Please enter Some Notes",
             },
-            name: {
-                required: "Please enter Name",
+            title: {
+                required: "Please Enter Title",
             },
-            emp_email: {
-                required: "Please enter Email",
-            },
-            emp_mobile: {
-                required: "Please enter Mobile",
+            date: {
+                required: "Please Enter Start Date",
             },
         },
         errorElement: "p",
@@ -66,15 +63,15 @@
             }
         },
         submitHandler: function() {
-            var form = $('#EditProject');
+            var form = $('#EditNotice');
             $(form).ajaxSubmit({
                 dataType: 'json',
 
                 success: function(data) {
                     if (data.status == "success") {
                         form.closest('.modal').modal('hide');
-                        notify("Project Updated Successfully", 'success');
-                        $('#projecttable').dataTable().api().ajax.reload();
+                        notify("Notice Updated Successfully", 'success');
+                        $('#noticetable').dataTable().api().ajax.reload();
                     } else {
                         notify(data.status, 'warning');
                     }

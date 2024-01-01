@@ -54,9 +54,19 @@ class EmpTaskController extends Controller
                         return @$row->employee->name;
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewemployestask(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
-                                    <i class="far fa-edit"></i>
-                                </a>';
+                        $last_two_day_start = now()->subDays(3)->startOfDay();
+                        $last_two_day_end = now()->startOfDay();
+                        
+                        if ($row->date >= $last_two_day_start && $row->date <= $last_two_day_end) {
+                            $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewemployestask(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
+                            <i class="far fa-edit"></i>
+                        </a>';
+                            $btn .= '<a href="javascript:void(0)" class="btn btn-outline-danger mx-1 delete mytest"  href="javascript:void(0);"  data-url="' . route('employee.task.delete', $row->id) . '" data-bs-toggle="modal" data-bs-target="#Delete">
+                        <i class="far fa-trash-alt"></i>
+                    </a>';
+                        } else {
+                            $btn = '';
+                        }
 
                         return $btn;
                     })
@@ -145,7 +155,18 @@ class EmpTaskController extends Controller
             return response()->json($response_array, 500);
         }
     }
-
+    public function delete($id)
+    {
+        try {
+            DB::transaction(function () use ($id) {
+                $Payment = Task::find($id);
+                $Payment->delete();
+            }, 5);
+            return response()->json(['status' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'msg' => $e->getMessage()]);
+        }
+    }
     public function task_report(Request $request)
     {
         if ($request->ajax()) {

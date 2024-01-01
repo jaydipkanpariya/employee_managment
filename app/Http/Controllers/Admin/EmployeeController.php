@@ -53,13 +53,21 @@ class EmployeeController extends Controller
 
             $toemail = $request->emp_email;
 
+            $employe = Employes::find($employee->id);
+            $employeeData = $employe->toArray();
 
+            Mail::send('mail', ['employe' => $employeeData], function ($message) use ($toemail) {
+                $message->from('jaydiptestmail@gmail.com', 'jaydiptestmail@gmail.com')
+                    ->to($toemail)
+                    ->subject('Reset Password')
+                    ->setBody('Your email content goes here');
+            });
 
-            // Mail::send([], [], function ($message) use ($toemail) {
-            //     $message->from('from@gmail.com', 'Highsense')
+            // Mail::send('mail', $employe, function ($message) use ($toemail) {
+            //     $message->from('hr@highsense.in', 'Highsense')
             //         ->to($toemail)
             //         ->subject('Reset Password')
-            //         ->setBody('Your email content goes here'); // Replace this line with your actual email content
+            //         ->setBody('Your email content goes here');
             // });
 
             DB::commit();
@@ -99,7 +107,15 @@ class EmployeeController extends Controller
 
             $toemail = $request->emp_email;
 
+            $employe = Employes::find($request->id);
+            $employeeData = $employe->toArray();
 
+            Mail::send('mail', ['employe' => $employeeData], function ($message) use ($toemail) {
+                $message->from('jaydiptestmail@gmail.com', 'jaydiptestmail@gmail.com')
+                    ->to($toemail)
+                    ->subject('Reset Password')
+                    ->setBody('Your email content goes here');
+            });
 
             // Mail::send([], [], function ($message) use ($toemail) {
             //     $message->from('from@gmail.com', 'Highsense')

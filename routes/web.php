@@ -60,9 +60,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/project/update', [ProjectController::class, 'update'])->name('project.update');
 
         //Notice
-        Route::get('/notice', [ProjectController::class, 'index'])->name('admin.notice');
+        Route::get('/notice', [NoticeController::class, 'index'])->name('notice.list');
+        Route::post('/notice/add', [NoticeController::class, 'add'])->name('notice.add');
+        Route::get('/notice/edit/{id}', [NoticeController::class, 'edit'])->name('notice.edit');
+        Route::delete('/notice/delete/{id}', [NoticeController::class, 'delete'])->name('notice.delete');
+        Route::post('/notice/update', [NoticeController::class, 'update'])->name('notice.update');
 
-        
+
     //         // task
     // Route::get('/task', [EmpTaskController::class, 'index'])->name('employe.task.list');
     // Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
@@ -88,6 +92,8 @@ Route::middleware('employe')->group(function () {
 
     // Logout Routes
     Route::get('/logout/submit', [EmpLoginController::class, 'logout'])->name('employe.logout.submit');
+    // note
+    Route::get('/notice/view/{id}', [EmpDashboardController::class, 'view'])->name('employe.notice.view');
 });
 
 // Route::middleware(['admin', 'employe'])->group(function () {
@@ -95,6 +101,12 @@ Route::middleware('employe')->group(function () {
     Route::post('/task/add', [EmpTaskController::class, 'add'])->name('employe.task.add');
     Route::get('/task/edit/{id}', [EmpTaskController::class, 'edit'])->name('employe.task.edit');
     Route::post('/task/update', [EmpTaskController::class, 'update'])->name('employee.task.update');
+    Route::delete('/task/delete/{id}', [EmpTaskController::class, 'delete'])->name('employee.task.delete');
 
 // });
+
+// note disable
+Route::get('/emp_note/{id}', [EmpDashboardController::class, 'emp_note']);
+Route::get('/update_password/{id}', [EmpDashboardController::class, 'update_password'])->name('update_password');
+
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Employe;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Project;
+use App\Models\Notice;
+use App\Models\Employes;
 use Illuminate\Http\Request;
 use DataTables;
 use Exception;
@@ -13,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class EmpDashboardController extends Controller
 {
-    public function dashboard() {
+    public function dashboard(Request $request) {
         if (!Auth::guard('employe')->user()) {
             return view('employe.login');
         }
@@ -30,8 +32,39 @@ class EmpDashboardController extends Controller
 
         $total_hours = $tasks->sum('hours');
 
+        if ($request->ajax()) {
+            $data = Notice::orderBy('id', 'DESC')->select('*');
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="btn btn-outline-warning mx-1 edit" onclick="viewproject(' . $row->id . ')" data-bs-toggle="modal" data-bs-target="#Edit-Category-Modal">
+                                    <i class="far fa-eye"></i>
+                                </a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
         return view('employe.dashboard', compact('last_seven_day_sum','current_month_sum','total_hours','total_project'));
 
+    }
+
+    public function view($id)
+    {
+        $pro = Notice::find($id);
+        return view('employe.notice.view', compact('pro'));
+    }
+    public function emp_note($id)
+    {
+        Employes::where('id',$id)->update([
+            'note' => 0
+        ]);
+        return response()->json(['status' => 'success']);
+    }
+    public function update_password($id)
+    {
+        return $id;
     }
 }

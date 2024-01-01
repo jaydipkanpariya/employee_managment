@@ -46,10 +46,11 @@
                     <li class="nav-item">
 						<a href="{{ $task }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Task</span></a>
 					</li>
+                    @if(Auth::guard('admin')->user())
 					<li class="nav-item">
-						<a href="{{ route('admin.notice') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Notice</span></a>
+						<a href="{{ route('notice.list') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Notice</span></a>
 					</li>
-
+                    @endif
 				</ul>
 			</div>
 		</div>
