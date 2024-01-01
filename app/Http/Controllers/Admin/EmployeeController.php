@@ -50,26 +50,15 @@ class EmployeeController extends Controller
             $employee->password = Hash::make($password);
             $employee->raw_password = $password;
             $employee->save();
-
             $toemail = $request->emp_email;
-
             $employe = Employes::find($employee->id);
             $employeeData = $employe->toArray();
-
             Mail::send('mail', ['employe' => $employeeData], function ($message) use ($toemail) {
                 $message->from('jaydiptestmail@gmail.com', 'jaydiptestmail@gmail.com')
                     ->to($toemail)
                     ->subject('Reset Password')
                     ->setBody('Your email content goes here');
             });
-
-            // Mail::send('mail', $employe, function ($message) use ($toemail) {
-            //     $message->from('hr@highsense.in', 'Highsense')
-            //         ->to($toemail)
-            //         ->subject('Reset Password')
-            //         ->setBody('Your email content goes here');
-            // });
-
             DB::commit();
             $response_array = ['status_code' => 200, 'status' => "success", 'message' => 'Inserted Successfully'];
             return response()->json($response_array, 200);
@@ -95,35 +84,13 @@ class EmployeeController extends Controller
     public function update(Request $request){
         try {
             DB::beginTransaction();
-            $password = $this->generateRandomPassword();
+
             $employee = Employes::find($request->id);
             $employee->emp_code = $request->emp_code;
             $employee->name = $request->name;
             $employee->emp_email = $request->emp_email;
             $employee->emp_mobile = $request->emp_mobile;
-            $employee->password = Hash::make($password);
-            $employee->raw_password = $password;
             $employee->save();
-
-            $toemail = $request->emp_email;
-
-            $employe = Employes::find($request->id);
-            $employeeData = $employe->toArray();
-
-            Mail::send('mail', ['employe' => $employeeData], function ($message) use ($toemail) {
-                $message->from('jaydiptestmail@gmail.com', 'jaydiptestmail@gmail.com')
-                    ->to($toemail)
-                    ->subject('Reset Password')
-                    ->setBody('Your email content goes here');
-            });
-
-            // Mail::send([], [], function ($message) use ($toemail) {
-            //     $message->from('from@gmail.com', 'Highsense')
-            //         ->to($toemail)
-            //         ->subject('Reset Password')
-            //         ->setBody('Your email content goes here'); // Replace this line with your actual email content
-            // });
-
             DB::commit();
             $response_array = ['status_code' => 200, 'status' => "success", 'message' => 'Inserted Successfully'];
             return response()->json($response_array, 200);
